@@ -7,11 +7,9 @@ from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from pyrogram import Client
 from pyrogram.enums import ParseMode
 import config
-import uvloop
 
 ID_CHATBOT = None
 CLONE_OWNERS = {}
-uvloop.install()
 
 logging.basicConfig(
     format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s",
@@ -19,17 +17,14 @@ logging.basicConfig(
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
 )
-
 logging.getLogger("pyrogram").setLevel(logging.ERROR)
 LOGGER = logging.getLogger(__name__)
-
 boot = time.time()
 mongodb = MongoCli(config.MONGO_URL)
 db = mongodb.Anonymous
 mongo = MongoClient(config.MONGO_URL)
 OWNER = config.OWNER_ID
 _boot_ = time.time()
-
 clonedb = None
 
 def dbb():
@@ -39,9 +34,6 @@ def dbb():
     db = {}
 
 cloneownerdb = db.clone_owners
-
-
-# ---------------- CLONE OWNER FUNCTIONS ---------------- #
 
 async def load_clone_owners():
     async for entry in cloneownerdb.find():
@@ -79,9 +71,6 @@ async def get_idclone_owner(clone_id):
         return data["user_id"]
     return None
 
-
-# ---------------- BOT CLASS ---------------- #
-
 class ShrutiCHATBOT(Client):
     def __init__(self):
         super().__init__(
@@ -92,8 +81,6 @@ class ShrutiCHATBOT(Client):
             in_memory=True,
             parse_mode=ParseMode.DEFAULT,
         )
-
-        # default values (agar start se pehle access hua to crash na ho)
         self.id = None
         self.name = None
         self.username = "UnknownBot"
@@ -110,15 +97,11 @@ class ShrutiCHATBOT(Client):
     async def stop(self):
         await super().stop()
 
-
-# ---------------- UTILS ---------------- #
-
 def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
     time_list = []
     time_suffix_list = ["s", "m", "h", "days"]
-
     while count < 4:
         count += 1
         if count < 3:
@@ -129,19 +112,13 @@ def get_readable_time(seconds: int) -> str:
             break
         time_list.append(int(result))
         seconds = int(remainder)
-
     for i in range(len(time_list)):
         time_list[i] = str(time_list[i]) + time_suffix_list[i]
-
     if len(time_list) == 4:
         ping_time += time_list.pop() + ", "
-
     time_list.reverse()
     ping_time += ":".join(time_list)
     return ping_time
-
-
-# ---------------- INIT OBJECTS ---------------- #
 
 ShrutiCHATBOT = ShrutiCHATBOT()
 userbot = Userbot()
