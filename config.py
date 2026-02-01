@@ -19,5 +19,5 @@ OWNER_ID = int(os.getenv("OWNER_ID", 7574330905))
 OWNER_USERNAME = os.getenv("OWNER_USERNAME", "WTF_WhyMeeh")
 
 # Support / Updates
-SUPPORT_GRP = os.getenv("SUPPORT_GRP", "ShrutiBotSupport")
-UPDATE_CHNL = os.getenv("UPDATE_CHNL", "ShrutiBots")
+SUPPORT_GRP = os.getenv("SUPPORT_GRP", "HEART_STR1NGS")
+UPDATE_CHNL = os.getenv("UPDATE_CHNL", "HEART_STR1NGS")
